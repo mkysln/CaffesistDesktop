@@ -1,54 +1,74 @@
 package views
 
 import AppColors
-import Firebase.getDocumentFromFirestore
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.google.gson.Gson
+import androidx.navigation.compose.rememberNavController
+import classes.firestore
+import classes.getFirestoreInstance
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-data class FirestoreDocument(
-    val name: String,
-    val fields: Map<String, Any>,
-    val createTime: String,
-    val updateTime: String
-)
-
+suspend fun getDocumentField(collection: String,document: String, field: String): String?{
+    return withContext(Dispatchers.IO){
+        try {
+            val db = getFirestoreInstance()
+            val document = db?.collection(collection)?.document(document)?.get()?.get()
+            document?.getString(field)
+        }catch (e:Exception){
+            e.printStackTrace()
+            null
+        }
+    }
+}
 
 @Composable
 fun MainScreen(navController: NavHostController) {
-    var documentData by remember { mutableStateOf<String?>(null) }
-    val docValueIsField = remember { mutableStateOf("") }
-    LaunchedEffect(true) {
-        val collectionName = "deneme"
-        val documentName = "desktop"
-        documentData = getDocumentFromFirestore(collectionName, documentName)
-        if (documentData != null) {
-            println("documentData: $documentData")
-            val firestoreDocument = Gson().fromJson(documentData,FirestoreDocument:: class.java)
-            docValueIsField.value = (firestoreDocument.fields["a"]as? Map<*, *>)?.get("stringValue").toString()
-        } else {
-            println("documentData: null")
+    val surname = remember { mutableStateOf<String?>(null) }
+    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(Unit){
+        coroutineScope.launch {
+            surname.value = getDocumentField("users","mkysln4@gmail.com","surname")
+            println("fetched surname: ${surname.value}")
         }
     }
     Surface(modifier = Modifier.fillMaxSize(), color = AppColors.colors.background) {
         Column {
-            IconButton(onClick = { navController.popBackStack()}){
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = AppColors.colors.primaryColor)
+            Column(modifier = Modifier.fillMaxWidth().height(70.dp), verticalArrangement = Arrangement.Center) {
+                IconButton(modifier = Modifier, onClick = { navController.popBackStack()}){
+                    Icon(modifier = Modifier.size(60.dp),imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = AppColors.colors.secondaryColor)
+                }
             }
 
-            Text(text = docValueIsField.value, fontSize = 35.sp, color = AppColors.colors.secondaryColor)
-
+            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                if (surname.value != null){
+                    Text(text = surname.value!!, color = Color.White, fontSize = 30.sp)
+                }else{
+                    Text("Loading...", color = Color.White, fontSize = 30.sp)
+                }
+            }
         }
+
     }
+}
+
+@Preview
+@Composable
+fun MainPreview() {
+    MainScreen(navController = rememberNavController())
 }

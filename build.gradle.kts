@@ -23,6 +23,7 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.androidx.navigation:navigation-compose:2.8.0-alpha02")
     implementation("com.google.firebase:firebase-admin:8.0.1")
+    implementation ("org.slf4j:slf4j-simple:1.7.32")
 
 }
 
