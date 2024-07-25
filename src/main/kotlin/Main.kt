@@ -1,4 +1,3 @@
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
@@ -8,15 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import classes.Colors
-import classes.firestore
 import com.google.auth.oauth2.GoogleCredentials
-import com.google.cloud.firestore.Firestore
-import com.google.cloud.firestore.FirestoreBundle
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
-import views.Login
+import views.HistScreen
 import views.MainScreen
-import views.Register
 import java.io.FileInputStream
 
 object AppColors{
@@ -35,15 +30,12 @@ fun main() = application {
 
 
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "login_screen"){
+        NavHost(navController = navController, startDestination = "main_screen"){
             composable("main_screen"){
                 MainScreen(navController = navController)
             }
-            composable("login_screen"){
-                Login(navController = navController)
-            }
-            composable("register_screen"){
-                Register(navController = navController)
+            composable("hist_screen"){
+                HistScreen(navController = navController)
             }
         }
 
