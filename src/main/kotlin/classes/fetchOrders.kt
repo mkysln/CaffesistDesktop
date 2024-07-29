@@ -9,7 +9,7 @@ fun fetchOrders() = callbackFlow {
     val db = getFirestoreInstance()
     val listenerRegistration = db.collection("orders")
         .whereEqualTo("confirm","onaylanmadı")
-        .orderBy("date", Query.Direction.ASCENDING)
+        .whereEqualTo("payTo",true)
         .addSnapshotListener { snapshot, exception ->
             if (exception != null) {
                 close(exception)

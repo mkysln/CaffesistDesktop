@@ -9,6 +9,7 @@ suspend fun HistOrder() = callbackFlow {
     val db = getFirestoreInstance()
     val listenerRegistration = db.collection("orders")
         .whereNotEqualTo("confirm","onaylanmadı")
+        .whereEqualTo("payTo",true)
         .addSnapshotListener { snapshot, exception ->
             if (exception != null) {
                 close(exception)
