@@ -3,16 +3,13 @@ package views
 import AppColors
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -161,7 +158,7 @@ fun ProductDetailDialog(orderId: String,totalPrice: Double,products: List<Produc
                     Text("Siparişler", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 25.sp)
                 }
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    Text("Sipariş no:  ${orderId}", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                    Text("Sipariş no:  $orderId", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 15.sp)
                 }
                 println("$products")
                 LazyColumn {
@@ -173,8 +170,8 @@ fun ProductDetailDialog(orderId: String,totalPrice: Double,products: List<Produc
                             Row(modifier = Modifier.fillMaxWidth()) {
                                 Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally){
                                     Row {
-                                        Text("${products.get(index).name} ", color = Color.White, fontSize = 20.sp)
-                                        Text(text = "x ${products.get(index).quantity}",color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                                        Text("${products[index].name} ", color = Color.White, fontSize = 20.sp)
+                                        Text(text = "x ${products[index].quantity}",color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                     }
 
                                 }

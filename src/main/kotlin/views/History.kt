@@ -6,9 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
-import classes.*
+import classes.HistOrder
+import classes.Order
+import classes.Product
 import kotlinx.coroutines.launch
 
 @Composable
@@ -135,7 +135,6 @@ fun HistScreen(navController: NavHostController) {
 
 @Composable
 fun HistoricProductDetailDialog(orderId: String,totalPrice: Double,products: List<Product>,onDismissRequest: () -> Unit) {
-    val db = getFirestoreInstance()
     Dialog(
         onDismissRequest = {
             onDismissRequest()
@@ -150,7 +149,7 @@ fun HistoricProductDetailDialog(orderId: String,totalPrice: Double,products: Lis
                     Text("Siparişler", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 25.sp)
                 }
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    Text("Sipariş no:  ${orderId}", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                    Text("Sipariş no:  $orderId", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 15.sp)
                 }
                 println("$products")
                 LazyColumn {
@@ -162,8 +161,8 @@ fun HistoricProductDetailDialog(orderId: String,totalPrice: Double,products: Lis
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally){
                                 Row {
-                                    Text("${products.get(index).name} ", color = Color.White, fontSize = 20.sp)
-                                    Text(text = "x ${products.get(index).quantity}",color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                                    Text("${products[index].name} ", color = Color.White, fontSize = 20.sp)
+                                    Text(text = "x ${products[index].quantity}",color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
 
                             }
