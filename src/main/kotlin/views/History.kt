@@ -1,12 +1,16 @@
 package views
 
 import AppColors
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.Interaction
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +33,7 @@ fun HistScreen(navController: NavHostController) {
     val selectedProduct = remember { mutableStateOf(emptyList<Product>()) }
     val selectedPrice = remember { mutableStateOf(0.0) }
     val orderId = remember { mutableStateOf("") }
-
+    val interactionSource = remember { MutableInteractionSource() }
     LaunchedEffect(Unit){
         coroutineScope.launch {
             HistOrder().collect{ newOrder ->
@@ -44,7 +48,11 @@ fun HistScreen(navController: NavHostController) {
 
             Column(modifier = Modifier.fillMaxSize().padding(top = 15.dp, start = 15.dp, end = 15.dp, bottom = 15.dp)) {
                 TopAppBar(backgroundColor = AppColors.colors.primaryColor,title = { Text("Geçmiş", color = Color.White) }, navigationIcon = {
-                    IconButton(onClick = {
+                    IconButton(
+                        modifier = Modifier.indication(
+                            MutableInteractionSource(),
+                            null),
+                        onClick = {
                         navController.popBackStack()
                     }){
                         Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,contentDescription = null, tint = Color.White)
