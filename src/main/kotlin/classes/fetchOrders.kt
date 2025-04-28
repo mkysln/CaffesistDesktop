@@ -23,9 +23,9 @@ fun fetchOrders() = callbackFlow {
 
                 if (snapshot != null) {
                     val orders = snapshot.documents.map { document ->
-                        val productMaps = document.get("products") as? List<Map<String, Any>>
+                        val productMaps = document.get("products") as? List<Map<*,*>>
                         val products = productMaps?.map { productMap ->
-                            val productDetails = productMap["product"] as? Map<String, Any>
+                            val productDetails = productMap["product"] as? Map<*, *>
                             Product(
                                 name = productDetails?.get("name") as? String ?: "",
                                 photo = productDetails?.get("photo") as? String ?: "",
