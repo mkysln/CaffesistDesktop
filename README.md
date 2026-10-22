@@ -1,5 +1,9 @@
 # Caffesist Desktop
 
-Caffesist Desktop, Caffesist projesinin masaüstü arayüzüdür. Kafe uygulamasına ait temel ekranları ve geçmiş kayıtlarını masaüstünden görüntülemeyi amaçlar.
+Caffesist Desktop is the desktop companion to the Caffesist café application. It is intended to provide a larger-screen interface for the main café workflow and history views, using Firebase and Cloud Firestore to connect to project data.
 
-Kotlin ve Compose Multiplatform ile geliştirilen uygulama, Firebase ve Cloud Firestore üzerinden proje verileriyle çalışır. Böylece mobil deneyimi destekleyen ayrı bir masaüstü kullanım alanı sunar.
+The application is built with Kotlin and Compose Multiplatform.
+
+## Firebase credentials
+
+The app reads a Firebase service-account JSON file from the path in the `FIREBASE_CREDENTIALS` environment variable. Keep this file outside the repository and never commit service-account credentials.
