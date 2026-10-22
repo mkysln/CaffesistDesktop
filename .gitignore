@@ -45,3 +45,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Local project configuration
+local.properties
+.idea/
+.kotlin/
